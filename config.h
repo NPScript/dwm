@@ -45,8 +45,6 @@ static const Layout layouts[] = {
 	{ "Tiled",     tile },    /* first entry is default */
 	{ "Free",      NULL },    /* no layout function means floating behavior */
 	{ "Monocle",   monocle },
-	{ "CM",				 centeredmaster },
-	{ "CFM",				 centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -66,13 +64,15 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *bravecmd[] = { "qutebrowser", NULL };
 static const char *musiccmd[] = { "st", "cmus", NULL };
-static const char *mailcmd[] = { "st", "mutt", NULL };
+static const char *mailcmd[] = { "st", "neomutt", NULL };
 static const char *filescmd[] = { "st", "sfm", NULL };
-static const char *vimcmd[] = { "st", "vim", NULL };
+static const char *vimcmd[] = { "st", "nvim", NULL };
 static const char *lockscr[] = { "slock", NULL };
 static const char *ctrlcmd[] = { "smessage", NULL };
 static const char *sayit[] = { "say-clip", "de-DE", NULL };
-static const char *passm[] = { "passtype", NULL };
+static const char *passm[] = { "passmenu", "--type", NULL };
+static const char *manuals[] = { "manuals", NULL };
+
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -122,6 +122,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,							XK_e,			 spawn,					 {.v = mailcmd } },
 	{ MODKEY|ShiftMask,							XK_f,			 spawn,					 {.v = filescmd } },
 	{ MODKEY|ShiftMask,							XK_v,			 spawn,					 {.v = vimcmd } },
+	{ MODKEY|ShiftMask,							XK_d,			 spawn,					 {.v = manuals } },
 	{ MODKEY,												XK_s,			 spawn,					 {.v = sayit } },
 	{ MODKEY|ControlMask,						XK_p,			 spawn,					 {.v = passm } },
 	{ MODKEY,												XK_e, 		 spawn, 				 SHCMD("emojimenu -t -d 0") },
