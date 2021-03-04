@@ -754,6 +754,7 @@ drawbar(Monitor *m)
 		drw_arc(drw, m->ww - tw - 2 * sp, 0, bh - 1, 64 * 90, 64 * 180, 1, 1);
 		drw_arc(drw, m->ww - 2 * sp - bh, 0, bh - 1, 64 * 270, 64 * 180, 1, 1);
 		drw_text(drw, m->ww - tw - 2 * sp + bh / 2, 0, tw - bh, bh, 0, stext, 0);
+		tw += bh / 2;
 	}
 
 	for (c = m->clients; c; c = c->next) {
@@ -797,10 +798,10 @@ drawbar(Monitor *m)
 		if (m->sel) {
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
 			drw_arc(drw, x, 0, bh - 1, 64 * 90, 64 * 180, 1, 1);
-			drw_arc(drw, x + w - 2 * sp - 1.5 * bh, 0, bh - 1, 64 * -90, 64 * 180, 1, 1);
-			drw_text(drw, x + bh / 2, 0, w - 2 * sp - 1.5 * bh, bh, 0, m->sel->name, 0);
+			drw_arc(drw, x + w - 2 * sp - bh, 0, bh - 1, 64 * -90, 64 * 180, 1, 1);
+			drw_text(drw, x + bh / 2, 0, w - 2 * sp - bh, bh, 0, m->sel->name, 0);
 			if (m->sel->isfloating)
-				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+				drw_arc(drw, x + boxs, boxs, boxw, 0, 64 * 360, m->sel->isfixed, 0);
 		} else {
 			drw_setscheme(drw, scheme[SchemeNorm]);
 		}
