@@ -4,6 +4,7 @@
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx     = 10;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const int vertpad            = 10;
@@ -30,9 +31,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
+	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
+	{ "Firefox", NULL,     NULL,           1 << 8,    0,          0,          -1,        -1 },
+	{ "St",      NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
 /* layout(s) */
@@ -45,8 +48,6 @@ static const Layout layouts[] = {
 	{ "Tiled",     tile },    /* first entry is default */
 	{ "Free",      NULL },    /* no layout function means floating behavior */
 	{ "Monocle",   monocle },
-	{ "CM",				 centeredmaster },
-	{ "CFM",				 centeredfloatingmaster },
 };
 
 /* key definitions */
@@ -64,13 +65,17 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
-static const char *bravecmd[] = { "brave", NULL };
+static const char *bravecmd[] = { "qutebrowser", NULL };
 static const char *musiccmd[] = { "st", "cmus", NULL };
-static const char *mailcmd[] = { "st", "mutt", NULL };
-static const char *filescmd[] = { "st", "ranger", NULL };
-static const char *vimcmd[] = { "st", "vim", NULL };
+static const char *mailcmd[] = { "st", "neomutt", NULL };
+static const char *filescmd[] = { "st", "sfm", NULL };
+static const char *vimcmd[] = { "st", "nvim", NULL };
 static const char *lockscr[] = { "slock", NULL };
 static const char *ctrlcmd[] = { "smessage", NULL };
+static const char *sayit[] = { "say-clip", "de-DE", NULL };
+static const char *passm[] = { "passmenu", "--type", NULL };
+static const char *manuals[] = { "manuals", NULL };
+static const char *w3m[] = { "st", "w3m", "-v", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
