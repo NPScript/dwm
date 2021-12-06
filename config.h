@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
-static const unsigned int gappx     = 10;        /* gap pixel between windows */
+static const unsigned int gappx     = 0;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -11,7 +11,7 @@ static const int vertpad            = 10;
 static const int sidepad            = 10;
 static const char *fonts[]          = { "SauceCodePro Nerd Font:style=Regular:pixelsize=14:antialias=true:autohint=true" };
 static const char dmenufont[]       = "SauceCodePro Nerd Font:style=Regular:pixelsize=14:antialias=true:autohint=true";
-static unsigned long barbg					= 0x070707;
+static unsigned long barbg					= 0x191919;
 static const char col_gray1[]       = "#191919";
 static const char col_gray2[]       = "#2c2c2c";
 static const char col_gray3[]       = "#888888";
@@ -131,6 +131,9 @@ static Key keys[] = {
 	{ 0,                       XF86XK_AudioLowerVolume, spawn, SHCMD("pactl set-sink-volume 0 -3%; pkill -RTMIN+10 dwmblocks") },
 	{ 0,                       XF86XK_AudioMute, spawn, SHCMD("pactl set-sink-mute 0 toggle; pkill -RTMIN+10 dwmblocks") },
 	{ 0,                       XF86XK_AudioRaiseVolume, spawn, SHCMD("pactl set-sink-volume 0 +3%; pkill -RTMIN+10 dwmblocks") },
+	{ 0,                       XF86XK_AudioPlay, spawn, SHCMD("playerctl play-pause") },
+	{ 0,                       XF86XK_AudioNext, spawn, SHCMD("playerctl next") },
+	{ 0,                       XF86XK_AudioPrev, spawn, SHCMD("playerctl previous") },
 };
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
