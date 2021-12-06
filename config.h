@@ -35,6 +35,7 @@ static const Rule rules[] = {
 	{ "st",      NULL,     NULL,           0,         0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 	{ "floating",NULL,     NULL,           0,         1,          0,           1,        -1 },
+	{ "st",      NULL,     "cmus",         0x100, 0,          1,           0,        0  },
 };
 
 /* layout(s) */

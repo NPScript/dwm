@@ -508,16 +508,17 @@ buttonpress(XEvent *e)
 		focus(NULL);
 	}
 	if (ev->window == selmon->barwin) {
-		i = x = 0;
+		i = 0;
+		x = sp;
 		do
 			x += TEXTW(tags[i]);
 		while (ev->x >= x && ++i < LENGTH(tags));
 		if (i < LENGTH(tags)) {
 			click = ClkTagBar;
 			arg.ui = 1 << i;
-		} else if (ev->x < x + blw)
+		} else if (ev->x < x + blw + 2 * sp)
 			click = ClkLtSymbol;
-		else if (ev->x > (x = selmon->ww - TEXTW(stext) + lrpad - 2 * bh)) {
+		else if (ev->x > (x = selmon->ww - TEXTW(stext) + lrpad - 4 * sp)) {
 			click = ClkStatusText;
 
 			char *text = rawstext;
@@ -1316,12 +1317,12 @@ movemouse(const Arg *arg)
 
 			nx = ocx + (ev.xmotion.x - x);
 			ny = ocy + (ev.xmotion.y - y);
-			if (abs(selmon->wx - nx + gappx) < snap)
+			if (abs(selmon->wx - nx + gappx + sp) < snap)
 				nx = selmon->wx + gappx;
 			else if (abs((selmon->wx + selmon->ww) - (nx + WIDTH(c)) - gappx) < snap)
-				nx = selmon->wx + selmon->ww - WIDTH(c) - gappx;
-			if (abs(selmon->wy - ny + gappx) < snap)
-				ny = selmon->wy + gappx;
+				nx = selmon->wx + selmon->ww - WIDTH(c) - gappx - sp;
+			if (abs(selmon->wy - ny + gappx + vp) < snap)
+				ny = selmon->wy + gappx + vp;
 			else if (abs((selmon->wy + selmon->wh) - (ny + HEIGHT(c)) - gappx) < snap)
 				ny = selmon->wy + selmon->wh - HEIGHT(c) - gappx;
 			if (!c->isfloating && selmon->lt[selmon->sellt]->arrange
@@ -1865,12 +1866,12 @@ tile(Monitor *m)
 		mw = m->ww - m->gappx;
 	for (i = 0, my = ty = m->gappx + vp, c = nexttiled(m->clients); c; c = nexttiled(c->next), i++)
 		if (i < m->nmaster) {
-			h = (m->wh - my) / (MIN(n, m->nmaster) - i) - m->gappx;
+			h = (m->wh - my) / (MIN(n, m->nmaster) - i) - 2 * vp;
 			resize(c, m->wx + m->gappx, m->wy + my, mw - (2*c->bw) - m->gappx, h - (2*c->bw), 0);
-			if (my + HEIGHT(c) + m->gappx * 2 < m->wh)
+			if (my + HEIGHT(c) + m->gappx < m->wh)
 				my += HEIGHT(c) + m->gappx;
 		} else {
-			h = (m->wh - ty) / (n - i) - m->gappx;
+			h = (m->wh - ty) / (n - i) - m->gappx - 2 * vp;
 				resize(c, m->wx + mw + m->gappx, m->wy + ty, m->ww - mw - (2*c->bw) - 2*m->gappx, h - (2*c->bw), 0);
 			if (ty + HEIGHT(c) + m->gappx < m->wh)
 				ty += HEIGHT(c) + m->gappx;
